@@ -1,0 +1,130 @@
+﻿<Window x:Class="CSTube_Win.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CSTube_Win"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1000">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Grid.ColumnSpan="3">
+            <Label Content="URL:"/>
+            <TextBox x:Name="URLInputTextBox" Margin="4,4"/>
+        </DockPanel>
+
+        <Button Content="Clear Log" Click="OnClearData"
+                Margin="4,4" Grid.Row="1" Grid.Column="0" />
+        <Button Content="Fetch from URL" Click="OnFetchFromURL"
+                Margin="4,4" Grid.Row="1" Grid.Column="1" />
+        <Button Content="Download ALL Audio" Click="OnStartMassDownloadAudio"
+                Margin="4,4" Grid.Row="1" Grid.Column="2" />
+
+
+        <Grid x:Name="grid" Margin="4,4" Grid.Row="2" Grid.ColumnSpan="3">
+            <ListView x:Name="downloadList">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FF979797" Offset="0"/>
+                                    <GradientStop Color="White" Offset="0.05"/>
+                                    <GradientStop Color="White" Offset="0.95"/>
+                                    <GradientStop Color="#FF979797" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}" Margin="4,0"/>
+                                <TextBlock Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Margin="4,0"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Horizontal">
+                                <TextBlock Text="{Binding Producer, UpdateSourceTrigger=PropertyChanged}" Margin="4,0"/>
+                            </StackPanel>
+
+                            <ProgressBar Grid.Column="1" Grid.Row="0"
+                                         Minimum="0" Maximum="1" Value="{Binding downloadProgress, UpdateSourceTrigger=PropertyChanged}" Height="20" Margin="4,4">
+                                <ProgressBar.Style>
+                                    <Style TargetType="ProgressBar">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger  Binding="{Binding isDownloading, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
+
+                            <Button Click="OnFetchVideoData" Grid.Column="2" Grid.Row="0">Fetch</Button>
+                            <Button Click="OnRemoveMediaItem" Grid.Column="2" Grid.Row="1">Delete</Button>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+
+        </Grid>
+        
+        <!--<Grid x:Name="grid" Margin="4,4" Grid.Row="2" Grid.ColumnSpan="3">
+            <DataGrid x:Name="musicList" AutoGenerateColumns="False" CanUserResizeRows="False">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Number}" Header="Nr" Width="*" />
+                    <DataGridTextColumn Binding="{Binding URL}" Header="URL" Width="1*" />
+                    <DataGridTextColumn Binding="{Binding Title}" Header="Title" Width="4*" />
+                    <DataGridTextColumn Binding="{Binding Producer}" Header="Producer" Width="2*" />
+                    <DataGridTextColumn Binding="{Binding Singer}" Header="Singer" Width="2*" />
+                    <DataGridTextColumn Binding="{Binding ReleaseDate}" Header="Release Date" Width="2*" />
+                    <DataGridTextColumn Binding="{Binding Tags}" Header="Tags" Width="2*" />
+                    <DataGridTemplateColumn Header="Download" Width="1.5*" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Click="OnFetchVideoData">Fetch</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>-->
+
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="3">
+
+            <!--
+            <ProgressBar x:Name="progressBar" Visibility="Collapsed" 
+                         Minimum="0" Maximum="1" Height="20" Margin="4,4"/>
+            -->
+
+            <TextBox x:Name="logPanel" IsReadOnly="True" MaxHeight="400"
+                 VerticalScrollBarVisibility="Visible"
+                 AcceptsReturn="True" AcceptsTab="True"
+                 VerticalAlignment="Bottom" />
+        </StackPanel>
+    </Grid>
+</Window>
