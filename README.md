@@ -1,7 +1,7 @@
-pytube
+CStube
 ======
 
-*CSTube* is a lightweight, dependency-free Python library (and command-line utility) for downloading YouTube Videos.
+*CSTube* is a lightweight, boilerplate-code-free port of the python library pytube for downloading YouTube Videos
 
 Description
 ===========
