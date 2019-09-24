@@ -1,5 +1,5 @@
-CStube
-======
+CSTube (DEPRECATED)
+===================
 
 *CSTube* is a lightweight, boilerplate-code-free port of the python library pytube for downloading YouTube Videos
 
